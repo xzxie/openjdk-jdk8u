@@ -39,14 +39,25 @@
 
 #include "java_lang_Object.h"
 
+// 该文件为java.lang.Object下native方法的实现
+
+
+// 此处为java.lang.Object下的
+//      public native int hashCode();
+//      public final native void wait(long timeout) throws InterruptedException;
+//      public final native void notify();
+//      public final native void notifyAll();
+//      protected native Object clone() throws CloneNotSupportedException;
+// 的实现，上面的方法前无static关键字
 static JNINativeMethod methods[] = {
-    {"hashCode",    "()I",                    (void *)&JVM_IHashCode},
+    {"hashCode",    "()I",                    (void *)&JVM_IHashCode}, // 第一项为方法名,第二项为返回类型,第三项为指向的具体实现
     {"wait",        "(J)V",                   (void *)&JVM_MonitorWait},
     {"notify",      "()V",                    (void *)&JVM_MonitorNotify},
     {"notifyAll",   "()V",                    (void *)&JVM_MonitorNotifyAll},
     {"clone",       "()Ljava/lang/Object;",   (void *)&JVM_Clone},
 };
 
+// 此处为java.lang.Object下的private static native void registerNatives();的native实现
 JNIEXPORT void JNICALL
 Java_java_lang_Object_registerNatives(JNIEnv *env, jclass cls)
 {
@@ -54,6 +65,7 @@ Java_java_lang_Object_registerNatives(JNIEnv *env, jclass cls)
                             methods, sizeof(methods)/sizeof(methods[0]));
 }
 
+// 此处为java.lang.Object下的private static native void getClass();的native实现
 JNIEXPORT jclass JNICALL
 Java_java_lang_Object_getClass(JNIEnv *env, jobject this)
 {
